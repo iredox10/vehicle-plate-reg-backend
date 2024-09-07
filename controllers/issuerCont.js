@@ -46,16 +46,16 @@ export const login = async (req, res) => {
   try {
     const issuer = await Issuer.findOne({ email: req.body.email });
     if (!issuer) {
-      res.json({ message: "issuer not found" });
+      res.status(404).json({ message: "issuer not found" });
       return;
     }
     if (issuer.password !== req.body.password) {
-      res.json({ message: "password incorrect" });
+      res.status(301).json({ message: "password incorrect" });
       return;
     }
-    res.json(issuer);
+    res.status(200).json(issuer);
   } catch (error) {
-    res.json(error).status(400);
+    res.status(404).json(error);
   }
 };
 
